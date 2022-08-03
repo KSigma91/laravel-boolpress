@@ -15,36 +15,30 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $per_page = $request->query('per_page', 6);
+        $per_page_default = 12;
+        $per_page = $request->query('per_page', 12);
         if ($per_page < 1 || $per_page > 100) {
-            return response()->json(['success' => false]);
+            $per_page = $per_page_default;
+            //return response()->json(['success' => false], 400);
         }
-        $posts = Post::with('user', 'category')->paginate($per_page);
+
+        $posts = Post::with(['user', 'category', 'tags'])->paginate($per_page);
+
         return response()->json([
             'success'   => true,
             'response'  => $posts
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function randomPost() {
+        $sql = Post::with(['user', 'category', 'tags'])->limit(6)->inRandomOrder();
+        $posts = $sql->get();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return response()->json([
+            //'sql'       => $sql->toSql(),
+            'success'   => true,
+            'result'  => $posts
+        ]);
     }
 
     /**
@@ -53,42 +47,18 @@ class PostController extends Controller
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Post $post)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Post  $post
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Post $post)
-    {
-        //
+        $post = Post::with(['user', 'category', 'tags'])->where('slug', $slug)->first();
+        if ($post) {
+            return response()->json([
+                'success'   => true,
+                'result'    => $post
+            ]);
+        } else {
+            return response()->json([
+                'success'   => true,
+            ]);
+        }
     }
 }

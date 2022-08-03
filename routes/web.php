@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('guests.home');
-})->name('home');
+# va messa sotto Route::middleware e modificarla
+// Route::get('/', function () {
+//     return view('guests.home');
+// })->name('home');
 
 Auth::routes();
 
@@ -34,3 +35,7 @@ Route::middleware('auth')
         Route::resource('categories', 'CategoryController');
         Route::resource('tags', 'TagController');
     });
+
+Route::get("{any?}", function () {
+    return view('guests.home');
+})->where("any", ".*")->name('home');

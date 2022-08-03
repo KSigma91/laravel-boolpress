@@ -35,4 +35,8 @@ class Post extends Model
     {
         return 'slug';
     }
+
+    protected $hidden = [
+        'id', 'created_at', 'update_at', 'user_id', 'category_id'
+    ];
 }
