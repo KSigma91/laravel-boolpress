@@ -14,7 +14,11 @@ class PostController extends Controller
 {
     protected $validation_rules = [
         'title'           => 'required|string|max:100',
-        'slug'            => ['required', 'string', 'max:100'],
+        'slug'            => [
+            'required',
+            'string',
+            'max:100'
+        ],
         'category_id'     => 'required|integer|exists:categories,id',
         'tags'            => 'nullable|array',
         'tags.*'          => 'integer|exists:tags,id',
@@ -39,7 +43,7 @@ class PostController extends Controller
 
     public function myIndex()
     {
-        $posts = Auth::user()->posts()->paginate($this->perPage);
+        $posts = Auth::user()->posts()->paginate($this->perPage); // TODO: capire perchè "posts" da errore
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -141,6 +145,7 @@ class PostController extends Controller
     {
         if (Auth::id() != $post->user_id) abort(401);
 
+        $post->tags()->detach();
         $post->delete();
 
         return redirect()->route('admin.posts.index')->with('deleted', "Il post {$post->title} è stato eliminato");

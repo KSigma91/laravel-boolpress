@@ -46,11 +46,11 @@
                         @endforeach
                     </td>
                     <td class="actions">
-                        <a href="{{ route('admin.posts.show', ['post' => $post]) }}" class="btn btn-primary">
+                        <a href="{{ route('admin.posts.show', $post) }}" class="btn btn-primary">
                             View
                         </a>
                         @if(Auth::id() == $post->user_id)
-                            <a href="{{ route('admin.posts.edit', ['post' => $post]) }}">
+                            <a href="{{ route('admin.posts.edit', ['post' => $post]) }}" class="btn btn-danger">
                                 Edit
                             </a>
                             <button class="btn btn-danger">
