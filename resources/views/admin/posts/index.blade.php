@@ -50,7 +50,7 @@
                             View
                         </a>
                         @if(Auth::id() == $post->user_id)
-                            <a href="{{ route('admin.posts.edit', ['post' => $post]) }}" class="btn btn-danger">
+                            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-danger">
                                 Edit
                             </a>
                             <button class="btn btn-danger">
@@ -64,4 +64,15 @@
     </table>
 
     {{ $posts->links() }}
+
+    <section class="overlay d-none">
+        <form class="popup" data-action="{{ route('admin.posts.destroy', ['post' => '*****']) }}" method="post">
+            @csrf
+            @method('DELETE')
+
+            <h1>Are you sure you want to delete this item?</h1>
+            <button type="submit" class="btn btn-warning js-yes">Yes</button>
+            <button type="button" class="btn btn-danger js-no">No</button>
+        </form>
+    </section>
 @endsection

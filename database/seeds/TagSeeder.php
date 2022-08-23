@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Tag;
+use Faker\Generator as Faker;
 use Illuminate\Database\Seeder;
 
 class TagSeeder extends Seeder
@@ -10,7 +11,7 @@ class TagSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         $tags = [
             'News',
@@ -23,7 +24,8 @@ class TagSeeder extends Seeder
 
         foreach ($tags as $tag) {
             Tag::create([
-                'name' => $tag
+                'name'          => $tag,
+                'description'   => $faker->paragraph()
             ]);
         }
     }

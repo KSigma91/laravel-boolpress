@@ -14,10 +14,10 @@
 </head>
 <body>
     @include('admin.partials.navbar')
-    <div class="container-fluid">
+    <div class="container-fluid d-flex">
         @include('admin.partials.aside-navbar')
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 py-4">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 py-4 w-75">
             @yield('mainContent')
         </main>
     </div>

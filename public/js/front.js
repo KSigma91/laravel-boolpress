@@ -2025,8 +2025,7 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get('/api/posts').then(function (response) {
-      _this.posts = response.data.response.data;
-      console.log(response);
+      _this.posts = response.data.response.data; //console.log(response);
     })["catch"](function (error) {
       return console.log('Error');
     });
@@ -2099,20 +2098,20 @@ __webpack_require__.r(__webpack_exports__);
     Page404: _Page404_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   props: {
-    post: String
+    slug: String
   },
   data: function data() {
     return {
       error404: false,
-      slug: null
+      post: null
     };
   },
   created: function created() {
     var _this = this;
 
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/posts/' + this.slug).then(function (response) {
-      if (response.data.response) {
-        _this.post = response.data.response;
+      if (response.data.success) {
+        _this.post = response.data.result;
       } else {
         _this.error404 = true;
       }
@@ -2175,11 +2174,23 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("div", {
     staticClass: "card-body d-flex flex-column justify-content-between"
-  }, [_c("h5", {
-    staticClass: "card-title"
+  }, [_c("h4", {
+    staticClass: "card-title",
+    staticStyle: {
+      color: "#2A2A31"
+    }
   }, [_c("strong", [_vm._v(_vm._s(_vm.post.title))])]), _vm._v(" "), _c("p", {
-    staticClass: "card-text"
-  }, [_c("small", [_vm._v(_vm._s(_vm.post.excerpt))])]), _vm._v(" "), _c("router-link", {
+    staticClass: "card-text",
+    staticStyle: {
+      color: "#666666"
+    }
+  }, [_c("small", [_vm._v(_vm._s(_vm.post.excerpt))]), _c("br"), _c("br"), _vm._v(" "), _c("small", {
+    staticClass: "mb-2",
+    staticStyle: {
+      "font-style": "italic",
+      color: "#666666"
+    }
+  }, [_vm._v("\n                    By " + _vm._s(_vm.post.user.name) + "\n                ")])]), _vm._v(" "), _c("router-link", {
     staticClass: "btn btn-outline-primary btn-sm w-50",
     attrs: {
       to: {
@@ -2223,12 +2234,12 @@ var render = function render() {
       href: "#"
     }
   }, [_vm._v("Logo")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c("div", {
-    staticClass: "collapse navbar-collapse",
+    staticClass: "collapse navbar-collapse d-flex justify-content-center",
     attrs: {
       id: "navbarNav"
     }
   }, [_c("ul", {
-    staticClass: "navbar-nav"
+    staticClass: "navbar-nav d-flex gap-3"
   }, _vm._l(_vm.navItems, function (navItem, index) {
     return _c("li", {
       key: index,
@@ -2240,7 +2251,7 @@ var render = function render() {
           name: navItem.routeName
         }
       }
-    }, [_vm._v(_vm._s(navItem.label))])], 1);
+    }, [_c("small", [_vm._v(_vm._s(navItem.label))])])], 1);
   }), 0)])])])]);
 };
 
@@ -2358,10 +2369,53 @@ var render = function render() {
         post: post
       }
     });
-  }), 1)]);
+  }), 1), _vm._v(" "), _vm._m(0)]);
 };
 
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("nav", {
+    attrs: {
+      "aria-label": "..."
+    }
+  }, [_c("ul", {
+    staticClass: "pagination pagination-sm d-flex justify-content-center mt-4"
+  }, [_c("li", {
+    staticClass: "page-item"
+  }, [_c("span", {
+    staticClass: "page-link"
+  }, [_vm._v("\n                    Previous\n                ")])]), _vm._v(" "), _c("li", {
+    staticClass: "page-item"
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("\n                    1\n                ")])]), _vm._v(" "), _c("li", {
+    staticClass: "page-item active",
+    attrs: {
+      "aria-current": "page"
+    }
+  }, [_c("span", {
+    staticClass: "page-link"
+  }, [_vm._v("\n                    2\n                ")])]), _vm._v(" "), _c("li", {
+    staticClass: "page-item"
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("\n                    3\n                ")])]), _vm._v(" "), _c("li", {
+    staticClass: "page-item"
+  }, [_c("a", {
+    staticClass: "page-link",
+    attrs: {
+      href: "#"
+    }
+  }, [_vm._v("\n                    Next\n                ")])])])]);
+}];
 render._withStripped = true;
 
 
@@ -2415,12 +2469,17 @@ var render = function render() {
 
   return _c("div", [_c("h1", {
     staticClass: "mb-5"
-  }, [_c("big", [_vm._v("\n            Benvenuti in Boolpress\n        ")])], 1), _vm._v(" "), _c("div", {
-    staticClass: "row g-3"
+  }, [_c("big", {
+    staticStyle: {
+      color: "#666666",
+      "font-size": "2em"
+    }
+  }, [_vm._v("\n            Benvenuti in Boolpress\n        ")])], 1), _vm._v(" "), _c("div", {
+    staticClass: "row g-2"
   }, _vm._l(_vm.posts, function (post) {
     return _c("div", {
       key: post.slug,
-      staticClass: "col-sm-6 col-md-6 col-lg-4"
+      staticClass: "col-sm-6 col-md-6 col-lg-4 mt-2"
     }, [_c("router-link", {
       attrs: {
         to: {
@@ -2431,7 +2490,29 @@ var render = function render() {
         }
       }
     }, [_c("img", {
-      staticClass: "img-fluid rounded-2",
+      staticClass: "img-fluid",
+      attrs: {
+        src: post.image,
+        alt: post.title
+      }
+    })])], 1);
+  }), 0), _vm._v(" "), _c("div", {
+    staticClass: "d-flex gap-1 w-50"
+  }, _vm._l(_vm.posts, function (post) {
+    return _c("div", {
+      key: post.slug,
+      staticClass: "col-sm-6 col-md-6 col-lg-4 mt-5"
+    }, [_c("router-link", {
+      attrs: {
+        to: {
+          name: "show",
+          params: {
+            slug: post.slug
+          }
+        }
+      }
+    }, [_c("img", {
+      staticClass: "img-fluid rounded-1",
       attrs: {
         src: post.image,
         alt: post.title
@@ -2461,19 +2542,44 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm.error404 ? _c("Page404") : _vm.post ? _c("div", [_vm._v("\n    Sono la show di " + _vm._s(_vm.post) + "\n\n    "), _c("h2", [_vm._v("\n        " + _vm._s(_vm.post.title) + "\n    ")]), _vm._v(" "), _c("h3", [_vm._v("\n        " + _vm._s(_vm.post.user.name) + "\n    ")]), _vm._v(" "), _c("h3", [_vm._v("\n        " + _vm._s(_vm.post.category.name) + "\n    ")]), _vm._v(" "), _c("div", {
+  return _vm.error404 ? _c("Page404") : _vm.post ? _c("div", [_c("h2", {
+    staticStyle: {
+      "font-style": "italic",
+      color: "#00585B"
+    }
+  }, [_vm._v("\n        " + _vm._s(_vm.post.title) + "\n    ")]), _vm._v(" "), _c("small", [_c("span", {
+    staticStyle: {
+      "font-style": "italic",
+      color: "#a7a7a7"
+    }
+  }, [_vm._v(_vm._s(_vm.post.user.name))])]), _vm._v(" "), _c("img", {
+    staticClass: "d-block img-fluid w-75 mt-2",
+    attrs: {
+      src: _vm.post.image,
+      alt: _vm.post.title
+    }
+  }), _vm._v(" "), _c("div", {
     staticClass: "list-tags"
   }, _vm._l(_vm.post.tags, function (tag) {
     return _c("div", {
       key: tag.id,
       staticClass: "tag"
-    }, [_vm._v("\n            " + _vm._s(tag.name) + "\n        ")]);
-  }), 0), _vm._v(" "), _c("img", {
-    attrs: {
-      src: _vm.post.image,
-      alt: _vm.post.title
-    }
-  }), _vm._v(" "), _c("p", [_vm._v("\n        " + _vm._s(_vm.post.content) + "\n    ")])]) : _vm._e();
+    }, [_c("small", {
+      staticStyle: {
+        "font-size": "0.7em"
+      }
+    }, [_vm._v("\n                Category: "), _c("span", {
+      staticStyle: {
+        "font-style": "italic"
+      }
+    }, [_vm._v(_vm._s(_vm.post.category.name) + " - ")]), _vm._v("\n                Tag: "), _c("span", {
+      staticStyle: {
+        "font-style": "italic"
+      }
+    }, [_vm._v(_vm._s(tag.name))])])]);
+  }), 0), _vm._v(" "), _c("p", {
+    staticClass: "mt-3 fs-5"
+  }, [_vm._v("\n        " + _vm._s(_vm.post.content) + "\n    ")])]) : _vm._e();
 };
 
 var staticRenderFns = [];

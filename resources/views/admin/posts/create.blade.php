@@ -34,12 +34,14 @@
         {{-- image form --}}
         <div class="mb-3">
             <label class="form-label" for="image">Image</label>
-            <input class="form-control @error('image') is-invalid @enderror" type="url" name="image" id="image" value="{{ old('image') }}">
+            <input class="form-control @error('image') is-invalid @enderror" type="file" name="image" id="image" accept="image/*">
             @error('image')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
             @enderror
+
+            <img src="" id="preview" class="img-fluid">
         </div>
 
         {{-- category form --}}

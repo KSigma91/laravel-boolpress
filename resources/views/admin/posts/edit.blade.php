@@ -32,7 +32,7 @@
                 id="slug"
                 value="{{ old('slug', $post->slug) }}"
             >
-            <button type="button" class="btn btn-primary">Reset</button>
+            <button type="button" class="btn btn-danger mt-3" style="color: #ffffff">Reset</button>
             @error('slug')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -42,14 +42,14 @@
 
         <div class="mb-3">
             <label class="form-label" for="image">Image</label>
-            <input class="form-control @error('image') is-invalid @enderror" type="url" name="image" id="image"
-                value="{{ old('image', $post->image) }}"
-            >
+            <input class="form-control @error('image') is-invalid @enderror" type="file" name="image" id="image" accept="image/*">
             @error('image')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
             @enderror
+
+            <img src="{{ asset('storage/' . $post->image) }}" id="preview" class="img-fluid">
         </div>
 
         <div class="mb-3">
@@ -117,6 +117,6 @@
             @enderror
         </div>
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" style="color: #ffffff">Save</button>
     </form>
 @endsection

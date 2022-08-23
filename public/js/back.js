@@ -19380,6 +19380,25 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+var actionDelete = document.querySelector('.overlay');
+
+if (actionDelete) {
+  var deleteButtons = document.querySelectorAll('.js-delete');
+  var formPopup = document.querySelector('.popup');
+  deleteButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      actionDelete.classList.remove('d-none');
+      var id = this.closest('[data-id]').dataset.id;
+      var pattern = formPopup.dataset.action;
+      var newAction = pattern.replace('*****', id);
+      formPopup.action = newAction;
+    });
+  });
+  document.querySelector('.js-no').addEventListener('click', function () {
+    actionDelete.classList.add('d-none');
+  });
+}
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

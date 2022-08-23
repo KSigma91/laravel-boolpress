@@ -5,13 +5,15 @@
         {{ $post->title }} - <small>by {{ $post->user->name }}</small>
     </h2>
 
-    <img src="{{ $post->image }}" alt="{{ $post->title }}">
+    @if ($post->image)
+        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
+    @endif
 
     <div class="tags mb-3">
         @foreach ($post->tags as $tag)
             <span class="tag">
                 <small>
-                    Category: <span style="font-style: italic">{{ $tag->name }}</span>
+                    Tag: <span style="font-style: italic">{{ $tag->name }}</span>
                 </small>
             </span>
         @endforeach

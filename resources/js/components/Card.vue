@@ -3,11 +3,14 @@
         <div class="card h-100 w-100 d-flex">
             <img :src="post.image" class="card-img-top" :alt="post.title">
             <div class="card-body d-flex flex-column justify-content-between">
-                <h5 class="card-title">
+                <h4 class="card-title" style="color: #2A2A31">
                     <strong>{{ post.title }}</strong>
-                </h5>
-                <p class="card-text">
-                    <small>{{ post.excerpt }}</small>
+                </h4>
+                <p class="card-text" style="color: #666666">
+                    <small>{{ post.excerpt }}</small><br><br>
+                    <small style="font-style: italic; color: #666666" class="mb-2">
+                        By {{ post.user.name }}
+                    </small>
                 </p>
                 <router-link :to="{name: 'show', params: {slug: post.slug}}" class="btn btn-outline-primary btn-sm w-50">
                     Read

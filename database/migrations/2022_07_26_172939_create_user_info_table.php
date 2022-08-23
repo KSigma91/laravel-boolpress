@@ -13,7 +13,7 @@ class CreateUserInfoTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_info', function (Blueprint $table) {
+        Schema::create('user_infos', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->string('address', 100)->nullable();
             $table->string('phone', 20)->nullable();
@@ -31,6 +31,6 @@ class CreateUserInfoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_info');
+        Schema::dropIfExists('user_infos');
     }
 }

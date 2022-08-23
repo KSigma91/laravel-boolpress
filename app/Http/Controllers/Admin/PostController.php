@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -77,6 +78,12 @@ class PostController extends Controller
         $data = $request->all() + [
             'user_id'   => Auth::id()
         ];
+
+        if (key_exists('image', $data)) {
+            $img_path = Storage::put('uploads', $data['image']);
+
+            $data['image'] = $img_path;
+        }
 
         $post = Post::create($data);
         $post->tags()->sync($data['tags']);

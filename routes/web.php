@@ -21,9 +21,6 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-//Route::get('/admin', 'Admin\AdminController@dashboard')->name('admin');
-//Route::resource('posts', 'Admin\PostController');
-
 Route::middleware('auth')
     ->namespace('Admin')
     ->name('admin.')

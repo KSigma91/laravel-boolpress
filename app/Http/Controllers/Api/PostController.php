@@ -8,6 +8,11 @@ use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
+    private function getImgUrl($imgPath)
+    {
+        return $imgPath ? asset('/storage/' . $imgPath) : null;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,13 +21,17 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $per_page_default = 12;
-        $per_page = $request->query('per_page', 12);
+        $per_page = $request->query('per_page', $per_page_default);
         if ($per_page < 1 || $per_page > 100) {
             $per_page = $per_page_default;
             //return response()->json(['success' => false], 400);
         }
 
         $posts = Post::with(['user', 'category', 'tags'])->paginate($per_page);
+
+        foreach ($posts as $post) {
+            $post->image = $this->getImgUrl($post->image);
+        }
 
         return response()->json([
             'success'   => true,
@@ -31,7 +40,7 @@ class PostController extends Controller
     }
 
     public function randomPost() {
-        $sql = Post::with(['user', 'category', 'tags'])->limit(6)->inRandomOrder();
+        $sql = Post::with(['user', 'category', 'tags'])->whereNotNull('image')->limit(6)->inRandomOrder();
         $posts = $sql->get();
 
         return response()->json([
@@ -39,6 +48,10 @@ class PostController extends Controller
             'success'   => true,
             'result'  => $posts
         ]);
+
+        foreach ($posts as $post) {
+            $post->image = $this->getImgUrl($post->image);
+        }
     }
 
     /**
@@ -51,6 +64,7 @@ class PostController extends Controller
     {
         $post = Post::with(['user', 'category', 'tags'])->where('slug', $slug)->first();
         if ($post) {
+            $post->image = $this->getImgUrl($post->image);
             return response()->json([
                 'success'   => true,
                 'result'    => $post
