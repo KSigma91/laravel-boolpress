@@ -19378,6 +19378,9 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+var _require = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"),
+    Axios = _require["default"];
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 var actionDelete = document.querySelector('.overlay');
@@ -19396,6 +19399,19 @@ if (actionDelete) {
   });
   document.querySelector('.js-no').addEventListener('click', function () {
     actionDelete.classList.add('d-none');
+  });
+}
+
+var inputTitle = document.getElementById('title');
+
+if (inputTitle) {
+  inputSlug = document.getElementById('slug');
+  inputTitle.addEventListener('focusout', function () {
+    if (!inputSlug.value) {
+      axios('/admin/getslug?title=' + inputTitle.value).then(function (result) {
+        return inputSlug.value = result.data.response;
+      });
+    }
   });
 }
 

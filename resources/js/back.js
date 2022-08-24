@@ -1,3 +1,5 @@
+const { default: Axios } = require('axios');
+
 require('./bootstrap');
 
 const actionDelete = document.querySelector('.overlay');
@@ -18,5 +20,17 @@ if (actionDelete) {
 
     document.querySelector('.js-no').addEventListener('click', function() {
         actionDelete.classList.add('d-none');
+    })
+}
+
+const inputTitle = document.getElementById('title');
+if (inputTitle) {
+    inputSlug = document.getElementById('slug');
+
+    inputTitle.addEventListener('focusout', function() {
+        if (!inputSlug.value) {
+            axios('/admin/getslug?title=' + inputTitle.value)
+                .then(result => inputSlug.value = result.data.response)
+        }
     })
 }

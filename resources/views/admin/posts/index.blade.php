@@ -50,7 +50,7 @@
                             View
                         </a>
                         @if(Auth::id() == $post->user_id)
-                            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-danger">
+                            <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-secondary">
                                 Edit
                             </a>
                             <button class="btn btn-danger">

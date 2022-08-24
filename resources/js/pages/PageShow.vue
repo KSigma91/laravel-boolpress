@@ -7,7 +7,7 @@
         <small>
             <span style="font-style: italic; color: #a7a7a7">{{ post.user.name }}</span>
         </small>
-        <img :src="post.image" :alt="post.title" class="d-block img-fluid w-75 mt-2">
+        <img v-if="post.image" :src="post.image" :alt="post.title" class="d-block img-fluid w-75 mt-2">
         <div class="list-tags">
             <div v-for="tag in post.tags" :key="tag.id"
             class="tag">

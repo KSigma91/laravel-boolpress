@@ -2044,7 +2044,47 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'PageContacts'
+  name: 'PageContacts',
+  data: function data() {
+    return {
+      name: '',
+      email: '',
+      message: '',
+      mailinglist: true,
+      sendMessage: '',
+      failedMessage: '',
+      sending: false,
+      warningError: {}
+    };
+  },
+  methods: {
+    sendMail: function sendMail() {
+      var _this = this;
+
+      this.sending = true;
+      axios.post('/api/leads', {
+        name: this.name,
+        email: this.email,
+        message: this.message,
+        mailinglist: this.mailinglist
+      }).then(function (response) {
+        if (response.data.success) {
+          _this.resetForm();
+
+          _this.sendMessage = response.data.response;
+        } else {
+          _this.warningError = response.data.response;
+        }
+      })["catch"](function (error) {
+        return _this.warningError = 'Si è verificato un errore, riprovare';
+      })["finally"](function (data) {
+        return _this.sending = false;
+      });
+    },
+    resetForm: function resetForm() {
+      this.name = '', this.email = '', this.message = '', this.mailinglist = true;
+    }
+  }
 });
 
 /***/ }),
@@ -2436,16 +2476,214 @@ var render = function render() {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _vm._m(0);
+  return _c("div", {
+    staticClass: "container d-flex"
+  }, [_vm._m(0), _vm._v(" "), _c("form", {
+    staticClass: "row g-2 mx-3",
+    attrs: {
+      novalidate: ""
+    },
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.sendMail.apply(null, arguments);
+      }
+    }
+  }, [_vm.sendMessage ? _c("div", {
+    staticClass: "alert alert-success",
+    attrs: {
+      role: "alert"
+    }
+  }, [_vm._v("\n            " + _vm._s(_vm.sendMessage) + "\n        ")]) : _vm._e(), _vm._v(" "), _vm.failedMessage ? _c("div", {
+    staticClass: "alert alert-success",
+    attrs: {
+      role: "alert"
+    }
+  }, [_vm._v("\n            " + _vm._s(_vm.failedMessage) + "\n        ")]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6 mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Name")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.name,
+      expression: "name"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "is-invalid": _vm.warningError.name
+    },
+    attrs: {
+      type: "text",
+      name: "name",
+      id: "name"
+    },
+    domProps: {
+      value: _vm.name
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.name = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "invalid-feedback"
+  }, [_c("ul", _vm._l(_vm.warningError.name, function (error) {
+    return _c("li", {
+      key: error
+    }, [_vm._v("\n                        " + _vm._s(error) + "\n                    ")]);
+  }), 0)])]), _vm._v(" "), _c("div", {
+    staticClass: "col-md-6 mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "email"
+    }
+  }, [_vm._v("Email")]), _vm._v(" "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.email,
+      expression: "email"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "is-invalid": _vm.warningError.email
+    },
+    attrs: {
+      type: "text",
+      name: "email",
+      id: "email"
+    },
+    domProps: {
+      value: _vm.email
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.email = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "invalid-feedback"
+  }, [_c("ul", _vm._l(_vm.warningError.email, function (error) {
+    return _c("li", {
+      key: error
+    }, [_vm._v("\n                        " + _vm._s(error) + "\n                    ")]);
+  }), 0)])]), _vm._v(" "), _c("div", {
+    staticClass: "col-12 mb-3"
+  }, [_c("label", {
+    staticClass: "form-label",
+    attrs: {
+      "for": "message"
+    }
+  }, [_vm._v("Message")]), _vm._v(" "), _c("textarea", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.message,
+      expression: "message"
+    }],
+    staticClass: "form-control",
+    "class": {
+      "is-invalid": _vm.warningError.message
+    },
+    attrs: {
+      name: "message",
+      id: "message",
+      cols: "30",
+      rows: "10"
+    },
+    domProps: {
+      value: _vm.message
+    },
+    on: {
+      input: function input($event) {
+        if ($event.target.composing) return;
+        _vm.message = $event.target.value;
+      }
+    }
+  }), _vm._v(" "), _c("div", {
+    staticClass: "invalid-feedback"
+  }, [_c("ul", _vm._l(_vm.warningError.message, function (error) {
+    return _c("li", {
+      key: error
+    }, [_vm._v("\n                        " + _vm._s(error) + "\n                    ")]);
+  }), 0)])]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.mailinglist,
+      expression: "mailinglist"
+    }],
+    staticClass: "form-check-input me-1",
+    "class": {
+      "is-invalid": _vm.warningError.newsletter
+    },
+    attrs: {
+      type: "checkbox",
+      name: "newsletter",
+      id: "newsletter"
+    },
+    domProps: {
+      checked: Array.isArray(_vm.mailinglist) ? _vm._i(_vm.mailinglist, null) > -1 : _vm.mailinglist
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.mailinglist,
+            $$el = $event.target,
+            $$c = $$el.checked ? true : false;
+
+        if (Array.isArray($$a)) {
+          var $$v = null,
+              $$i = _vm._i($$a, $$v);
+
+          if ($$el.checked) {
+            $$i < 0 && (_vm.mailinglist = $$a.concat([$$v]));
+          } else {
+            $$i > -1 && (_vm.mailinglist = $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.mailinglist = $$c;
+        }
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "form-check-label",
+    attrs: {
+      "for": "newsletter"
+    }
+  }, [_vm._v("Iscrivimi alla newsletter")]), _vm._v(" "), _c("div", {
+    staticClass: "invalid-feedback"
+  }, [_c("ul", _vm._l(_vm.warningError.newsletter, function (error) {
+    return _c("li", {
+      key: error
+    }, [_vm._v("\n                        " + _vm._s(error) + "\n                    ")]);
+  }), 0)])]), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-primary col-4",
+    attrs: {
+      type: "submit",
+      disabled: _vm.sending
+    }
+  }, [_vm._v(_vm._s(_vm.sending ? "Sending..." : "Send"))])])]);
 };
 
 var staticRenderFns = [function () {
   var _vm = this,
       _c = _vm._self._c;
 
-  return _c("div", [_c("h2", {
+  return _c("div", {
+    staticClass: "col-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c("h2", {
     staticClass: "mb-4"
-  }, [_vm._v("\n        Contact us\n    ")]), _vm._v(" "), _c("p", [_vm._v("\n        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat minus in saepe, iusto, excepturi qui earum nulla non vel assumenda quis inventore temporibus maiores voluptate mollitia laboriosam illum, suscipit pariatur!\n    ")]), _vm._v(" "), _c("p", [_vm._v("\n        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi beatae nihil iste nobis aspernatur perspiciatis, nisi, aliquam alias error, veniam reprehenderit consequatur veritatis quibusdam nemo totam porro unde? Unde, error.\n        Sequi, maxime iste blanditiis odio repudiandae et aspernatur molestias nulla sit quam. Molestiae fugiat, sint porro quo, ut debitis omnis dolor beatae maxime magnam, ipsum deserunt. Temporibus nesciunt veritatis iste!\n        Eum eos cum iste quae recusandae error nisi ab vel cumque esse fugiat deleniti incidunt amet quaerat magni odit non maxime, maiores molestiae culpa enim inventore eveniet facilis. Delectus, at.\n        Dolores voluptates quidem voluptatibus facere nulla cupiditate dignissimos ratione a placeat ipsum. Reprehenderit amet totam temporibus ex sint ducimus tenetur sequi exercitationem dignissimos inventore, aperiam, repudiandae quisquam necessitatibus nostrum hic?\n        Exercitationem id doloremque voluptatem consequuntur in similique qui error explicabo eius quam quos consequatur ad sed animi, cum beatae non veritatis architecto voluptate at. Quam quo voluptate maxime error dolor.\n    ")])]);
+  }, [_vm._v("\n            Contact us\n        ")]), _vm._v(" "), _c("p", [_vm._v("\n            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat minus in saepe, iusto, excepturi qui earum nulla non vel assumenda quis inventore temporibus maiores voluptate mollitia laboriosam illum, suscipit pariatur!\n        ")]), _vm._v(" "), _c("p", [_vm._v("\n            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat minus in saepe, iusto, excepturi qui earum nulla non vel assumenda quis inventore temporibus maiores voluptate mollitia laboriosam illum, suscipit pariatur!\n        ")])]);
 }];
 render._withStripped = true;
 
@@ -2552,13 +2790,13 @@ var render = function render() {
       "font-style": "italic",
       color: "#a7a7a7"
     }
-  }, [_vm._v(_vm._s(_vm.post.user.name))])]), _vm._v(" "), _c("img", {
+  }, [_vm._v(_vm._s(_vm.post.user.name))])]), _vm._v(" "), _vm.post.image ? _c("img", {
     staticClass: "d-block img-fluid w-75 mt-2",
     attrs: {
       src: _vm.post.image,
       alt: _vm.post.title
     }
-  }), _vm._v(" "), _c("div", {
+  }) : _vm._e(), _vm._v(" "), _c("div", {
     staticClass: "list-tags"
   }, _vm._l(_vm.post.tags, function (tag) {
     return _c("div", {

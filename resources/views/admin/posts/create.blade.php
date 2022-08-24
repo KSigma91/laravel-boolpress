@@ -5,7 +5,7 @@
         Create new post
     </h2>
 
-    <form action="{{ route('admin.posts.store') }}" method="post" novalidate>
+    <form action="{{ route('admin.posts.store') }}" method="post" novalidate enctype="multipart/form-data">
         @csrf
 
         {{-- title form --}}

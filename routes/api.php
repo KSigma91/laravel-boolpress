@@ -23,3 +23,5 @@ Route::get('/posts', 'Api\PostController@index')->name('api.posts.index');
 Route::get('/posts/random', 'Api\PostController@randomPost')->name('api.posts.randomPost');
 
 Route::get('/posts/{post}', 'Api\PostController@show')->name('api.posts.show');
+
+Route::resource('leads', 'Api\LeadController');

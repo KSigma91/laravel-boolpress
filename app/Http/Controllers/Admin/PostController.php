@@ -23,7 +23,7 @@ class PostController extends Controller
         'category_id'     => 'required|integer|exists:categories,id',
         'tags'            => 'nullable|array',
         'tags.*'          => 'integer|exists:tags,id',
-        'image'           => 'required_without:content|nullable|url',
+        'image'           => 'required_without:content|nullable|file|image|max:2048',
         'content'         => 'required_without:image|nullable|string|max:3000',
         'excerpt'         => 'nullable|string|max:200'
     ];

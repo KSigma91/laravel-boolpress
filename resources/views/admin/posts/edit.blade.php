@@ -5,7 +5,7 @@
         Modify post
     </h2>
 
-    <form action="{{ route('admin.posts.update', ['post' => $post]) }}" method="post" novalidate>
+    <form action="{{ route('admin.posts.update', ['post' => $post]) }}" method="post" novalidate enctype="multipart/form-data">
         @csrf
         @method('put')
 
